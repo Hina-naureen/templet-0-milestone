@@ -159,7 +159,7 @@ const Cards: React.FC = () => {
           style={{ maxWidth: '1240px' }}
         >
           {row.map((product, index) => (
-           <Link key={product.name || index} href={`/products/${product.name?.toLowerCase().replace(/\s+/g, '-')}`}>
+           <Link key={product.name || index} href={`/orderNow/${product.name?.toLowerCase().replace(/\s+/g, '-')}`}>
               <Product
                 name={product.name}
                 image={product.image}
