@@ -39,7 +39,7 @@ const Product: React.FC<{ name: string; image: string; price: string; descriptio
 };
 
 // Main Component
-const NewComponent: React.FC = () => {
+const Cards: React.FC = () => {
   const productRows = [
     [
       {
@@ -184,4 +184,4 @@ const NewComponent: React.FC = () => {
   );
 };
 
-export default NewComponent;
+export default Cards;
