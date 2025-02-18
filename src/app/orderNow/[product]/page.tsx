@@ -1,44 +1,46 @@
-
 "use client";
 
 import { NavBar } from "@/app/Component/Navbar";
-import React from "react";
-
-
-import { useRouter } from "next/navigation"; // Correct import for App Router
-import Image from "next/image"; // Import Image component
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const ProductOrder = () => {
-  const router = useRouter(); // Initialize router
+  const router = useRouter();
+
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("L");
+  const [selectedColor, setSelectedColor] = useState("#816DFA");
 
   const handleAddToCart = () => {
-    router.push("/ShoppingCart"); // Redirect to /cart page
+    const product = {
+      id: 1,
+      name: "Asgaard Sofa",
+      description: "A luxurious and comfortable sofa, perfect for modern living spaces.",
+      price: "Rs. 250,000.00",
+      image: "/Asgaard sofa 33.png",
+      quantity,
+      size: selectedSize,
+      color: selectedColor,
+    };
+
+    localStorage.setItem("cart", JSON.stringify([product]));
+    router.push("/ShoppingCart");
   };
 
   return (
     <div className="relative bg-gray-50 min-h-screen">
-      {/* Navbar */}
       <NavBar bgColor="bg-[#FFFFFF]" />
 
-      {/* Additional Container */}
+
+      
+      {/* Breadcrumb */}
       <div className="w-full h-[100px] bg-[#FFFFFF] fixed top-9 left-0 z-10 flex justify-start px-[99px]">
         <div className="flex items-center text-gray-500">
           <span>Home</span>
-          <Image
-            src="/Vector.png"
-            alt="arrow"
-            width={12}
-            height={8}
-            className="mx-[20px]"
-          />
+          <span className="mx-2">➤</span>
           <span>Shop</span>
-          <Image
-            src="/Vector.png"
-            alt="arrow"
-            width={14}
-            height={8}
-            className="mx-[20px]"
-          />
+          <span className="mx-2">➤</span>
         </div>
         <div className="flex items-center">
           <div className="w-[37px] rotate-90 border-t-2 border-gray-500"></div>
@@ -46,129 +48,82 @@ const ProductOrder = () => {
         </div>
       </div>
 
+
       {/* Page Container */}
-      <div className="relative top-[1px] w-[1440px] h-[820px] mx-auto bg-gray-50">
-        {/* Left Side Images */}
+      <div className="relative top-[50px] w-[1440px] h-[820px] mx-auto bg-gray-50">
+        {/* Left Side Small Images */}
         <div className="absolute w-[76px] h-[416px] top-[266px] left-[99px]">
           {[
-            "Outdoor sofa set 1.png",
-            "Outdoor sofa set_3.png",
-            "Stuart sofa 1.png",
-            "Maya sofa three seater (1) 1.png",
-          ].map((img, i) => (
-            <div
-              key={i}
-              className="w-[66px] h-[70px] mb-[15px] bg-[#FFF9E5]"
-            >
-              <Image
-                src={`/${img}`}
-                alt={`Sofa ${i + 1}`}
-                width={66}
-                height={70}
-                className="object-cover"
-              />
+            { id: 1, src: "/Outdoor sofa set 1.png" },
+            { id: 2, src: "/Outdoor sofa set_3.png" },
+            { id: 3, src: "/Stuart sofa 1.png" },
+            { id: 4, src: "/Maya sofa three seater (1) 1.png" },
+          ].map((img) => (
+            <div key={img.id} className="w-[66px] h-[70px] mb-[15px] bg-[#FFF9E5] hover:shadow-lg cursor-pointer">
+              <Image src={img.src} alt="Sofa" width={66} height={70} className="object-cover" />
             </div>
           ))}
         </div>
 
-        {/* Right Side Layout */}
+        {/* Right Side */}
         <div className="absolute w-[1241px] h-auto top-[246px] left-[197px] flex gap-[20px]">
-          {/* Image and Background */}
+          {/* Large Image */}
           <div className="relative w-[553px] h-[500px]">
-            <div className="absolute w-[423px] h-[500px] bg-[#FFF9E5] rounded-tl-[10px]"></div>
-            <div className="absolute w-[391px] h-[391px] top-[55px] left-[25px]">
-              <Image
-                src="/Asgaard sofa 1.png"
-                alt="Asgaard Sofa"
-                width={391}
-                height={391}
-                className="object-contain"
-              />
-            </div>
+            <Image src="/Asgaard sofa 33.png" alt="Asgaard Sofa" width={391} height={391} className="object-contain" />
           </div>
 
           {/* Product Details */}
           <div className="relative w-[606px] h-auto">
-            <h1 className="text-[42px] font-poppins font-light leading-[63px] text-black mb-[20px]">
-              Asgaard Sofa
-            </h1>
-            <p className="text-[24px] font-medium text-[#9F9F9F] mb-[10px]">
-              Rs. 250,000.00
+            <h1 className="text-[42px] font-light text-black mb-[10px]">Asgaard Sofa</h1>
+            <p className="text-[18px] text-gray-600 mb-[10px]">
+              A luxurious and comfortable sofa, perfect for modern living spaces.
             </p>
+            <p className="text-[24px] font-medium text-[#9F9F9F] mb-[10px]">Rs. 250,000.00</p>
 
-            {/* Ratings */}
-            <div className="flex items-center gap-[10px] mb-[20px]">
-              {[...Array(4)].map((_, i) => (
-                <Image
-                  key={i}
-                  src="/star.png"
-                  alt="Full Star"
-                  width={18}
-                  height={18}
-                />
-              ))}
-              <div className="w-[18px] h-[18px] bg-[url('/half.png')] bg-cover bg-no-repeat"></div>
-              <div className="w-[37px] rotate-90 border-t-2 border-gray-500"></div>
-              <p className="text-[#9F9F9F] text-[13px] ml-[10px]">
-                5 Customer Reviews
-              </p>
-            </div>
-
-            {/* Description */}
-            <p className="text-[13px] font-light leading-[19.5px] text-black mb-[20px]">
-              Setting the bar as one of the loudest speakers in its class,<br />
-              the Kilburn is a compact, stout-hearted hero with a<br />
-              well-balanced audio which boasts a clear midrange and<br />
-              extended highs for a sound.
-            </p>
-
-            {/* Sizes */}
-            <div className="mb-[20px]">
-              <span className="text-gray-500 font-poppins text-[14px] block mb-[10px]">
-                Size:
-              </span>
-              <div className="flex gap-[10px]">
-                {["L", "XL", "XS"].map((size, i) => (
-                  <div
-                    key={i}
-                    className={`w-[30px] h-[30px] ${
-                      i === 0 ? "bg-[#FBEBB5]" : "bg-[#FAF4F4]"
-                    } flex justify-center items-center rounded-[5px]`}
-                  >
-                    <span className="text-[13px] font-light">{size}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Colors */}
-            <div className="mb-[20px]">
-              <span className="text-gray-500 font-poppins text-[14px] block mb-[10px]">
-                Color:
-              </span>
-              <div className="flex gap-[10px]">
-                <div className="w-[30px] h-[30px] bg-[#816DFA] rounded-full"></div>
-                <div className="w-[30px] h-[30px] bg-black rounded-full"></div>
-                <div className="w-[30px] h-[30px] bg-[#CDBA7B] rounded-full"></div>
-              </div>
-            </div>
-
-            {/* Add to Cart Section */}
-            <div className="flex items-center gap-[20px] mb-[20px]">
-              <div className="flex items-center justify-between w-[123px] h-[64px] bg-[#FFF9E5] rounded-[10px]">
-                <button className="text-black text-[16px]">-</button>
-                <span className="text-black text-[16px]">1</span>
-                <button className="text-black text-[16px]">+</button>
-              </div>
-
-              {/* Updated Button */}
-              <button
-                onClick={handleAddToCart} // Call function on click
-                className="mt-6 border border-black py-3 px-10 text-black hover:bg-yellow-600 hover:text-black bg-gray-200"
+            {/* Size Selection */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Size:</label>
+              <select
+                className="border p-2 w-[100px] mt-1"
+                value={selectedSize}
+                onChange={(e) => setSelectedSize(e.target.value)}
               >
-                Add to Cart
-              </button>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+              </select>
             </div>
+
+            {/* Color Selection */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Color:</label>
+              <input
+                type="color"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+                className="w-[50px] h-[30px] border mt-1"
+              />
+            </div>
+
+            {/* Quantity Selection */}
+            <div className="mb-4">
+              <label className="block text-gray-700">Quantity:</label>
+              <input
+                type="number"
+                value={quantity}
+                min="1"
+                className="border p-2 w-[80px] mt-1"
+                onChange={(e) => setQuantity(Number(e.target.value))}
+              />
+            </div>
+
+            {/* Add to Cart Button */}
+            <button
+                onClick={handleAddToCart}
+                className="mt-6 px-6 py-3 bg-gradient-to-r from-yellow-400 to-yellow-500 text-black font-semibold rounded-full shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+              >
+                🛒 Add to Cart
+              </button>
           </div>
         </div>
       </div>
