@@ -7,6 +7,8 @@ import SideTableSection from "./Component/SideTableSection";
 import HeroWithProducts from "./Component/HeroWithProduct";
 import HomePage from "./Component/Blog";
 import Footer from "./Component/Footer";
+import Popup from "./Component/Popup";
+
 
 
 
@@ -21,7 +23,8 @@ const MainPage = () => {
       
       <HomePage />
       <Footer />
-      
+     
+      <Popup />
       
       
     </div>
